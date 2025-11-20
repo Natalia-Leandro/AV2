@@ -12,7 +12,7 @@ interface Props {
   onCancel: () => void;
 }
 
-export default function FormAlunos({
+export default function FormAluno({
   aluno,
   loading,
   onChange,
@@ -53,9 +53,6 @@ export default function FormAlunos({
             mode="outlined"
             style={{ marginBottom: 16, backgroundColor: "#fff" }}
             autoFocus
-            textColor="#222"
-            underlineColor="#1976d2"
-            selectionColor="#1976d2"
             error={!!fieldState.error}
           />
         )}
@@ -76,9 +73,6 @@ export default function FormAlunos({
             }}
             mode="outlined"
             style={{ marginBottom: 16, backgroundColor: "#fff" }}
-            textColor="#222"
-            underlineColor="#1976d2"
-            selectionColor="#1976d2"
             error={!!fieldState.error}
           />
         )}
@@ -99,9 +93,6 @@ export default function FormAlunos({
             }}
             mode="outlined"
             style={{ marginBottom: 16, backgroundColor: "#fff" }}
-            textColor="#222"
-            underlineColor="#1976d2"
-            selectionColor="#1976d2"
             error={!!fieldState.error}
           />
         )}
@@ -111,9 +102,7 @@ export default function FormAlunos({
       <Controller
         control={control}
         name="matricula"
-        rules={{
-          required: "Matrícula obrigatória",
-        }}
+        rules={{ required: "Matrícula obrigatória" }}
         render={({ field: { onChange: onChangeField, value }, fieldState }) => (
           <TextInput
             label="Matrícula"
@@ -124,9 +113,6 @@ export default function FormAlunos({
             }}
             mode="outlined"
             style={{ marginBottom: 16, backgroundColor: "#fff" }}
-            textColor="#222"
-            underlineColor="#1976d2"
-            selectionColor="#1976d2"
             error={!!fieldState.error}
           />
         )}
@@ -142,14 +128,9 @@ export default function FormAlunos({
         Salvar
       </Button>
 
-      <Button
-        mode="outlined"
-        onPress={onCancel}
-        labelStyle={{ color: "#1976d2" }}
-      >
+      <Button mode="outlined" onPress={onCancel}>
         Cancelar
       </Button>
     </View>
   );
 }
-

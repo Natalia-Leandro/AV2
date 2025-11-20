@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, ActivityIndicator, Alert } from "react-native";
-import { Card, Button, Text, FAB } from "react-native-paper";
+import { View, FlatList, ActivityIndicator, Alert, Platform } from "react-native";
+import { Card, Text, FAB, IconButton } from "react-native-paper";
 import { useRouter } from "expo-router";
 
 import alunoService, { Aluno } from "../../scripts/alunoService";
@@ -10,7 +10,6 @@ export default function ListaAlunos() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // Carrega a lista de alunos
   const carregarAlunos = async () => {
     setLoading(true);
     try {
@@ -25,19 +24,36 @@ export default function ListaAlunos() {
     carregarAlunos();
   }, []);
 
-  // Excluir aluno
+  // 🔥 Função de excluir funcionando 100%
   const handleDelete = (id: number) => {
-    Alert.alert("Excluir Aluno", "Deseja realmente excluir este aluno?", [
-      { text: "Cancelar", style: "cancel" },
-      {
-        text: "Excluir",
-        style: "destructive",
-        onPress: async () => {
+    // 👉 WEB
+    if (Platform.OS === "web") {
+      const confirmar = window.confirm("Deseja realmente excluir este aluno?");
+      if (confirmar) {
+        (async () => {
           await alunoService.excluir(id);
-          router.replace("/alunos" as never); // recarrega lista
+          await carregarAlunos();
+        })();
+      }
+      return;
+    }
+
+    // 👉 ANDROID / iOS
+    Alert.alert(
+      "Excluir Aluno",
+      "Deseja realmente excluir este aluno?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Excluir",
+          style: "destructive",
+          onPress: async () => {
+            await alunoService.excluir(id);
+            await carregarAlunos();
+          },
         },
-      },
-    ]);
+      ]
+    );
   };
 
   if (loading)
@@ -54,26 +70,25 @@ export default function ListaAlunos() {
               title={item.nome}
               subtitle={`Curso: ${item.curso} | Turma: ${item.turma}`}
             />
+
             <Card.Content>
               <Text>Matrícula: {item.matricula}</Text>
             </Card.Content>
 
-            <Card.Actions>
-              <Button
-                mode="outlined"
-                onPress={() => router.replace(`/alunos/${item.id}` as never)}
-                style={{ marginRight: 8 }}
-              >
-                Editar
-              </Button>
+            <Card.Actions style={{ justifyContent: "flex-end" }}>
+              <IconButton
+                icon="pencil"
+                iconColor="#1976d2"
+                size={26}
+                onPress={() => router.push(`/alunos/${item.id}` as never)}
+              />
 
-              <Button
-                mode="outlined"
-                textColor="#d32f2f"
+              <IconButton
+                icon="delete"
+                iconColor="#d32f2f"
+                size={26}
                 onPress={() => handleDelete(item.id!)}
-              >
-                Excluir
-              </Button>
+              />
             </Card.Actions>
           </Card>
         )}
@@ -92,7 +107,7 @@ export default function ListaAlunos() {
           bottom: 16,
           backgroundColor: "#1976d2",
         }}
-        onPress={() => router.replace("/alunos/novo" as never)}
+        onPress={() => router.push("/alunos/novo" as never)}
         color="#fff"
       />
     </View>

@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 
 import alunoService, { Aluno } from "../../scripts/alunoService";
-import FormAluno from "../../components/FormAlunos";
+import FormAluno from "../../components/FormAluno";
 
 export default function NovoAluno() {
   const [aluno, setAluno] = useState<Aluno>({
@@ -17,7 +17,6 @@ export default function NovoAluno() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Captura mudança nos campos
   const handleChange = (name: keyof Aluno, value: string) => {
     setAluno((prev) => ({
       ...prev,
@@ -25,7 +24,6 @@ export default function NovoAluno() {
     }));
   };
 
-  // Enviar formulário
   const handleSubmit = async () => {
     if (!aluno.nome || !aluno.turma || !aluno.curso || !aluno.matricula) {
       alert("Preencha todos os campos!");
@@ -35,7 +33,7 @@ export default function NovoAluno() {
     setLoading(true);
     try {
       await alunoService.criar(aluno);
-      router.replace("/alunos" as never);
+      router.push("/alunos");
     } finally {
       setLoading(false);
     }
@@ -56,11 +54,8 @@ export default function NovoAluno() {
         onChange={handleChange}
         onSubmit={handleSubmit}
         onCancel={() => {
-          if (router.canGoBack?.()) {
-            router.back();
-          } else {
-            router.replace("/alunos" as never);
-          }
+          if (router.canGoBack?.()) router.back();
+          else router.push("/alunos");
         }}
       />
     </View>
