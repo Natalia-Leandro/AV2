@@ -51,7 +51,7 @@ export default function FormAlunoPage() {
     }
 
     setLoading(false);
-    navigate("/");
+    navigate("/alunos");
   };
 
   return (
@@ -79,7 +79,7 @@ export default function FormAlunoPage() {
         loading={loading}
         onChange={handleChange}
         onSubmit={handleSubmit}
-        onCancel={() => navigate("/")}
+        onCancel={() => navigate("/alunos")}
       />
     </Paper>
   );

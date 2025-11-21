@@ -7,41 +7,60 @@ export default function NavBar() {
   const location = useLocation();
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        borderRadius: "12px",
-        margin: "16px",
-        width: "calc(100% - 32px)",
-        backgroundColor: "#1976d2",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
-      }}
-    >
-      <Toolbar>
-        <Stack direction="row" spacing={2}>
-          <Button
-            color={location.pathname === "/" ? "secondary" : "inherit"}
-            variant={location.pathname === "/" ? "contained" : "text"}
-            component={RouterLink}
-            to="/"
-            startIcon={<ListAltIcon />}
-            sx={{ fontWeight: "bold" }}
-          >
-            ALUNOS
-          </Button>
+    <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "20px" }}>
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{
+          background: "#7b1fa2",
+          borderRadius: "20px",
+          width: "85%",
+          maxWidth: "1100px",
+          boxShadow: "0px 6px 18px rgba(0,0,0,0.18)",
+        }}
+      >
+        <Toolbar sx={{ justifyContent: "center" }}>
+          <Stack direction="row" spacing={3}>
+            <Button
+              component={RouterLink}
+              to="/"
+              startIcon={<ListAltIcon />}
+              sx={{
+                background: location.pathname === "/" ? "#e91e63" : "transparent",
+                color: "white",
+                fontWeight: "bold",
+                padding: "10px 26px",
+                borderRadius: "12px",
+                "&:hover": {
+                  background:
+                    location.pathname === "/" ? "#c2185b" : "rgba(255,255,255,0.25)",
+                },
+              }}
+            >
+              ALUNOS
+            </Button>
 
-          <Button
-            color={location.pathname === "/novo" ? "secondary" : "inherit"}
-            variant={location.pathname === "/novo" ? "contained" : "text"}
-            component={RouterLink}
-            to="/novo"
-            startIcon={<PersonAddAlt1Icon />}
-            sx={{ fontWeight: "bold" }}
-          >
-            NOVO ALUNO
-          </Button>
-        </Stack>
-      </Toolbar>
-    </AppBar>
+            <Button
+              component={RouterLink}
+              to="/novo"
+              startIcon={<PersonAddAlt1Icon />}
+              sx={{
+                background: location.pathname === "/novo" ? "#e91e63" : "transparent",
+                color: "white",
+                fontWeight: "bold",
+                padding: "10px 26px",
+                borderRadius: "12px",
+                "&:hover": {
+                  background:
+                    location.pathname === "/novo" ? "#c2185b" : "rgba(255,255,255,0.25)",
+                },
+              }}
+            >
+              NOVO ALUNO
+            </Button>
+          </Stack>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
