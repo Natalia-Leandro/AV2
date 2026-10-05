@@ -8,7 +8,7 @@ O objetivo é desenvolver **duas aplicações** (Web e Mobile) consumindo a mesm
 ## 🚀 Tecnologias Utilizadas
 
 ### **Web (Vite + React)**
-- React 18
+- React 19
 - Vite
 - React Router DOM
 - Axios
